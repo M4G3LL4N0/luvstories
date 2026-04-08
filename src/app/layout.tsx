@@ -26,12 +26,18 @@ export default async function RootLayout({
 }>) {
   const supabase = createServer();
   const { data: { session } } = await supabase.auth.getSession();
+  
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider session={session}>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }
