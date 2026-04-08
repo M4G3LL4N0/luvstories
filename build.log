@@ -1,0 +1,22 @@
+
+> luvstories@0.1.0 build
+> next build
+
+▲ Next.js 16.2.2 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.9s
+  Running TypeScript ...
+Failed to type check.
+
+./src/lib/supabase/server.ts:8:5
+Type error: Object literal may only specify known properties, and 'supabaseUrl' does not exist in type 'GetServerSidePropsContext | { req: NextApiRequest; res: NextApiResponse; }'.
+
+  [90m 6 |[0m   
+  [90m 7 |[0m   [36mreturn[0m createPagesServerClient({
+[31m[1m>[0m [90m 8 |[0m     supabaseUrl: process.env.[33mNEXT_PUBLIC_SUPABASE_URL[0m!,
+  [90m   |[0m     [31m[1m^[0m
+  [90m 9 |[0m     supabaseKey: process.env.[33mNEXT_PUBLIC_SUPABASE_ANON_KEY[0m!,
+  [90m10 |[0m     options: {
+  [90m11 |[0m       cookies: {
+Next.js build worker exited with code: 1 and signal: null
