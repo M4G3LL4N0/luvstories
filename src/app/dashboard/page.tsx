@@ -1,13 +1,7 @@
-import { createServer } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
-export default async function Dashboard() {
-  const supabase = createServer();
-  const { data: { session } } = await supabase.auth.getSession();
-
-  if (!session) {
-    return redirect('/login');
-  }
+export default function Dashboard() {
+  const supabase = createClient();
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">

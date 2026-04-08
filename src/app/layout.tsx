@@ -26,10 +26,6 @@ export default async function RootLayout({
 }>) {
   const supabase = createServer();
   const { data: { session } } = await supabase.auth.getSession();
-
-  if (!session) {
-    return redirect('/login');
-  }
   return (
     <html
       lang="en"
