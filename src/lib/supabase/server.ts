@@ -1,38 +1,28 @@
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import CryptoJS from 'crypto-js'
 
-export const createServer = () => {
-  const cookieStore = cookies()
-  
-  return createPagesServerClient({
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    options: {
+export async function createServer() {
+  const cookieStore = await cookies()
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
       cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value
+        getAll() {
+          return cookieStore.getAll()
         },
-        set(name: string, value: string, options: any) {
-          cookieStore.set({ name, value, ...options })
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options)
+            })
+          } catch {
+            // Called from a Server Component where setting cookies may not be allowed.
+            // Middleware / proxy can handle session refresh.
+          }
         },
-        remove(name: string, options: any) {
-          cookieStore.set({ name, value: '', ...options })
-        }
-      }
+      },
     }
-  })
-}
-
-export async function encryptData(data: string): Promise<string> {
-  const secret = process.env.ENCRYPTION_SECRET;
-  if (!secret) throw new Error('Missing encryption secret');
-  return CryptoJS.AES.encrypt(data, secret).toString();
-}
-
-export async function decryptData(encryptedData: string): Promise<string> {
-  const secret = process.env.ENCRYPTION_SECRET;
-  if (!secret) throw new Error('Missing encryption secret');
-  const bytes = CryptoJS.AES.decrypt(encryptedData, secret);
-  return bytes.toString(CryptoJS.enc.Utf8);
+  )
 }

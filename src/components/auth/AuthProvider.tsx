@@ -1,16 +1,16 @@
 'use client';
 
-import { Session } from '@supabase/auth-helpers-nextjs';
-import { createContext, useContext, ReactNode } from 'react';
+import type { Session } from '@supabase/supabase-js';
+import { createContext, useContext, type ReactNode } from 'react';
 
 const AuthContext = createContext<Session | null>(null);
 
 export function AuthProvider({
-  session,
   children,
+  session,
 }: {
-  session: Session | null;
   children: ReactNode;
+  session: Session | null;
 }) {
   return (
     <AuthContext.Provider value={session}>
@@ -20,9 +20,5 @@ export function AuthProvider({
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  return useContext(AuthContext);
 }

@@ -1,27 +1,54 @@
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
-import { encryptData } from './server';
+type StoryRow = {
+  id: string;
+  user_id: string;
+  title: string;
+  status: string | null;
+  privacy_level: string | null;
+  updated_at: string | null;
+};
 
-export async function seedInitialStory(supabase: ReturnType<typeof createPagesServerClient>, userId: string) {
-  // Check if initial story already exists
-  const { data: existing } = await supabase
+type SupabaseLike = {
+  from: (table: string) => {
+    select: (columns: string) => {
+      eq: (column: string, value: string) => {
+        maybeSingle: () => Promise<{ data: StoryRow | null; error: unknown }>;
+      };
+    };
+    insert: (
+      values:
+        | Record<string, unknown>
+        | Array<Record<string, unknown>>
+    ) => Promise<{ error: unknown }>;
+  };
+};
+
+export async function seedInitialStory(
+  supabase: SupabaseLike,
+  userId: string
+) {
+  const { data: existingStory, error: existingStoryError } = await supabase
     .from('stories')
-    .select('id')
-    .eq('title', 'Project Val')
+    .select('id, user_id, title, status, privacy_level, updated_at')
     .eq('user_id', userId)
-    .single();
+    .maybeSingle();
 
-  if (!existing) {
-    const encryptedContent = await encryptData(
-      "This is your first private story. Only you can see this content."
-    );
-    
-    await supabase
-      .from('stories')
-      .insert({
-        user_id: userId,
-        title: 'Project Val',
-        content: encryptedContent,
-        is_private: true
-      });
+  if (existingStoryError) {
+    console.error('Error checking existing story:', existingStoryError);
+    return;
+  }
+
+  if (existingStory) {
+    return;
+  }
+
+  const { error: insertError } = await supabase.from('stories').insert({
+    user_id: userId,
+    title: 'Me & Val',
+    status: 'active',
+    privacy_level: 'private',
+  });
+
+  if (insertError) {
+    console.error('Error seeding initial story:', insertError);
   }
 }

@@ -5,18 +5,24 @@
 ▲ Next.js 16.2.2 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 3.9s
+✓ Compiled successfully in 1732ms
   Running TypeScript ...
-Failed to type check.
+  Finished TypeScript in 1358ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/7) ...
+  Generating static pages using 7 workers (1/7) 
+  Generating static pages using 7 workers (3/7) 
+  Generating static pages using 7 workers (5/7) 
+✓ Generating static pages using 7 workers (7/7) in 89ms
+  Finalizing page optimization ...
 
-./src/lib/supabase/server.ts:8:5
-Type error: Object literal may only specify known properties, and 'supabaseUrl' does not exist in type 'GetServerSidePropsContext | { req: NextApiRequest; res: NextApiResponse; }'.
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /auth/callback
+├ ƒ /dashboard
+└ ƒ /login
 
-  [90m 6 |[0m   
-  [90m 7 |[0m   [36mreturn[0m createPagesServerClient({
-[31m[1m>[0m [90m 8 |[0m     supabaseUrl: process.env.[33mNEXT_PUBLIC_SUPABASE_URL[0m!,
-  [90m   |[0m     [31m[1m^[0m
-  [90m 9 |[0m     supabaseKey: process.env.[33mNEXT_PUBLIC_SUPABASE_ANON_KEY[0m!,
-  [90m10 |[0m     options: {
-  [90m11 |[0m       cookies: {
-Next.js build worker exited with code: 1 and signal: null
+
+ƒ  (Dynamic)  server-rendered on demand
+
