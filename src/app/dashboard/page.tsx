@@ -1,16 +1,31 @@
-import { createClient } from '@/lib/supabase/client';
+import { createServer } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
+import StoriesList from '@/components/stories/StoriesList';
+import { seedInitialStory } from '@/lib/supabase/seed';
 
-export default function Dashboard() {
-  const supabase = createClient();
+export default async function Dashboard() {
+  const supabase = createServer();
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  // Seed first story for demo purposes
+  await seedInitialStory(supabase, session.user.id);
+
+  const { data: stories } = await supabase
+    .from('stories')
+    .select('*')
+    .eq('user_id', session.user.id)
+    .order('created_at', { ascending: false });
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <h1 className="text-3xl font-bold dark:text-white">Welcome to Your Dashboard</h1>
-        <div className="mt-8">
-          <p className="text-lg dark:text-zinc-300">
-            Your private stories will appear here.
-          </p>
+    <div className="flex flex-col flex-1 bg-zinc-50 dark:bg-black min-h-screen">
+      <main className="flex-1 container mx-auto py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold dark:text-white mb-8">Your Private Stories</h1>
+          <StoriesList stories={stories || []} />
         </div>
       </main>
     </div>

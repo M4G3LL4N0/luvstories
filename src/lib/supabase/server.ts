@@ -1,5 +1,6 @@
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import CryptoJS from 'crypto-js'
 
 export const createServer = () => {
   const cookieStore = cookies()
@@ -21,4 +22,17 @@ export const createServer = () => {
       }
     }
   })
+}
+
+export async function encryptData(data: string): Promise<string> {
+  const secret = process.env.ENCRYPTION_SECRET;
+  if (!secret) throw new Error('Missing encryption secret');
+  return CryptoJS.AES.encrypt(data, secret).toString();
+}
+
+export async function decryptData(encryptedData: string): Promise<string> {
+  const secret = process.env.ENCRYPTION_SECRET;
+  if (!secret) throw new Error('Missing encryption secret');
+  const bytes = CryptoJS.AES.decrypt(encryptedData, secret);
+  return bytes.toString(CryptoJS.enc.Utf8);
 }
