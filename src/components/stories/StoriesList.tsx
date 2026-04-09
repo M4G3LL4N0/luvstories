@@ -13,7 +13,26 @@ function formatDate(value?: string | null) {
   return date.toLocaleDateString();
 }
 
-export default function StoriesList({ stories }: { stories: Story[] }) {
+export default function StoriesList({ 
+  stories,
+  isLoading = false 
+}: { 
+  stories: Story[];
+  isLoading?: boolean;
+}) {
+  if (isLoading) {
+    return (
+      <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 text-white">
+        <div className="text-lg font-semibold">Your stories</div>
+        <div className="mt-4 space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-16 animate-pulse rounded-2xl bg-white/10" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   if (!stories || stories.length === 0) {
     return (
       <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 text-white">

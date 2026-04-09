@@ -9,11 +9,15 @@ type AuthContextType = {
     id: string;
     email?: string | null;
   } | null;
+  isLoading: boolean;
+  error: Error | null;
 };
 
 const AuthContext = createContext<AuthContextType>({
   session: null,
   user: null,
+  isLoading: false,
+  error: null,
 });
 
 export function AuthProvider({
@@ -23,10 +27,17 @@ export function AuthProvider({
   children: ReactNode;
   session: Session | null;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const user = session?.user ?? null;
   
   return (
-    <AuthContext.Provider value={{ session, user }}>
+    <AuthContext.Provider value={{ 
+      session, 
+      user,
+      isLoading,
+      error 
+    }}>
       {children}
     </AuthContext.Provider>
   );
