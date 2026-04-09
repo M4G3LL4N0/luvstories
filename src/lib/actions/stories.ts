@@ -43,31 +43,52 @@ export async function addEvent(
 ): Promise<StoryEvent> {
   const supabase = await createServer();
   
+  // Validate authentication
   const { data: { user }, error: userError } = await supabase.auth.getUser();
   if (userError || !user) {
-    throw new Error('Not authenticated');
+    throw new Error('Authentication required');
   }
 
-  const { data: event, error } = await supabase
-    .from('story_events')
-    .insert({
-      story_id: storyId,
-      user_id: user.id,
-      title: eventData.title,
-      description: eventData.description,
-      event_type: eventData.event_type,
-      emotional_tone: eventData.emotional_tone,
-      impact_score: eventData.impact_score,
-      occurred_at: eventData.occurred_at || new Date().toISOString()
-    })
-    .select('*')
+  // Validate story ownership
+  const { error: ownershipError } = await supabase
+    .from('stories')
+    .select('id')
+    .eq('id', storyId)
+    .eq('user_id', user.id)
     .single();
 
-  if (error) {
-    throw error;
+  if (ownershipError) {
+    throw new Error('Story not found or access denied');
   }
 
-  return event;
+  // Validate required fields
+  if (!eventData.title || !eventData.occurred_at) {
+    throw new Error('Title and date are required');
+  }
+
+  try {
+    const { data: event, error } = await supabase
+      .from('story_events')
+      .insert({
+        story_id: storyId,
+        user_id: user.id,
+        title: eventData.title,
+        description: eventData.description,
+        event_type: eventData.event_type,
+        emotional_tone: eventData.emotional_tone,
+        impact_score: eventData.impact_score,
+        occurred_at: eventData.occurred_at,
+        is_encrypted: eventData.is_encrypted || false
+      })
+      .select('*')
+      .single();
+
+    if (error) throw error;
+    return event;
+  } catch (error) {
+    console.error('Failed to add event:', error);
+    throw new Error('Failed to create event');
+  }
 }
 
 export async function addNote(

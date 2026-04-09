@@ -1,182 +1,87 @@
--- Ensure extensions are enabled with robust error handling
-do $$
-begin
-  if not exists (select 1 from pg_extension where extname = 'uuid-ossp') then
-    create extension "uuid-ossp";
-    raise notice 'Created uuid-ossp extension';
-  end if;
-exception when others then
-  raise warning 'Failed to create uuid-ossp extension: %', sqlerrm;
-end $$;
+-- Enable required extensions
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-do $$
-begin
-  if not exists (select 1 from pg_extension where extname = 'pgcrypto') then
-    create extension "pgcrypto";
-    raise notice 'Created pgcrypto extension';
-  end if;
-exception when others then
-  raise warning 'Failed to create pgcrypto extension: %', sqlerrm;
-end $$;
+-- Create tables with proper constraints and comments
+CREATE TABLE "public"."stories" (
+  "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  "user_id" UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  "title" TEXT NOT NULL,
+  "status" TEXT NOT NULL DEFAULT 'active' 
+    CHECK (status IN ('active', 'archived', 'deleted')),
+  "privacy_level" TEXT NOT NULL DEFAULT 'private'
+    CHECK (privacy_level IN ('private', 'shared')),
+  "is_encrypted" BOOLEAN NOT NULL DEFAULT FALSE,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+COMMENT ON TABLE "public"."stories" IS 'Primary story workspaces for users';
 
--- Enable RLS for all tables with security comments and existence checks
-do $$
-declare
-  table_name text;
-begin
-  for table_name in 
-    select table_name 
-    from information_schema.tables 
-    where table_schema = 'public' 
-    and table_name in (
-      'stories', 'story_profiles', 'story_events', 
+-- Create other tables with similar structure
+CREATE TABLE "public"."story_profiles" (
+  "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  "story_id" UUID NOT NULL REFERENCES "public"."stories"(id) ON DELETE CASCADE,
+  "user_id" UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  "subject_name" TEXT,
+  "relationship_type" TEXT,
+  "summary" TEXT,
+  "is_encrypted" BOOLEAN NOT NULL DEFAULT FALSE,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Add indexes for performance
+CREATE INDEX IF NOT EXISTS idx_stories_user_id ON "public"."stories"(user_id);
+CREATE INDEX IF NOT EXISTS idx_stories_updated_at ON "public"."stories"(updated_at);
+
+-- Enable RLS and create policies for all tables
+DO $$
+DECLARE
+  tbl TEXT;
+BEGIN
+  FOR tbl IN 
+    SELECT table_name 
+    FROM information_schema.tables 
+    WHERE table_schema = 'public' 
+    AND table_name IN (
+      'stories', 'story_profiles', 'story_events',
       'story_notes', 'story_scores', 'story_reports'
     )
-  loop
-    execute format('comment on table public.%I is %L', 
-      table_name, 'Private story data protected by RLS');
-    execute format('alter table public.%I enable row level security', table_name);
-    raise notice 'Enabled RLS for table: %', table_name;
-  end loop;
-end $$;
-alter table "public"."story_profiles" enable row level security;
-alter table "public"."story_events" enable row level security;
-alter table "public"."story_notes" enable row level security;
-alter table "public"."story_scores" enable row level security;
-alter table "public"."story_reports" enable row level security;
+  LOOP
+    EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', tbl);
+    
+    EXECUTE format('CREATE POLICY "Users can only access their own rows" 
+      ON %I FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id)', tbl);
+  END LOOP;
+END
+$$;
 
--- Stories table
-create table "public"."stories" (
-  "id" uuid primary key default uuid_generate_v4(),
-  "user_id" uuid references auth.users(id) on delete cascade not null,
-  "title" text not null,
-  "status" text default 'active',
-  "privacy_level" text default 'private',
-  "created_at" timestamp with time zone default timezone('utc'::text, now()) not null,
-  "updated_at" timestamp with time zone default timezone('utc'::text, now()) not null
-);
+-- Create update timestamp function
+CREATE OR REPLACE FUNCTION update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
--- Story profiles table
-create table "public"."story_profiles" (
-  "id" uuid primary key default uuid_generate_v4(),
-  "story_id" uuid references "public"."stories"(id) on delete cascade not null,
-  "user_id" uuid references auth.users(id) on delete cascade not null,
-  "subject_name" text,
-  "relationship_type" text,
-  "summary" text,
-  "created_at" timestamp with time zone default timezone('utc'::text, now()) not null,
-  "updated_at" timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Story events table
-create table "public"."story_events" (
-  "id" uuid primary key default uuid_generate_v4(),
-  "story_id" uuid references "public"."stories"(id) on delete cascade not null,
-  "user_id" uuid references auth.users(id) on delete cascade not null,
-  "title" text not null,
-  "description" text,
-  "event_type" text,
-  "emotional_tone" text,
-  "impact_score" integer,
-  "occurred_at" timestamp with time zone,
-  "created_at" timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Story notes table
-create table "public"."story_notes" (
-  "id" uuid primary key default uuid_generate_v4(),
-  "story_id" uuid references "public"."stories"(id) on delete cascade not null,
-  "user_id" uuid references auth.users(id) on delete cascade not null,
-  "title" text not null,
-  "body" text,
-  "body_encrypted" text,
-  "is_encrypted" boolean default false,
-  "created_at" timestamp with time zone default timezone('utc'::text, now()) not null,
-  "updated_at" timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Story scores table
-create table "public"."story_scores" (
-  "id" uuid primary key default uuid_generate_v4(),
-  "story_id" uuid references "public"."stories"(id) on delete cascade not null,
-  "user_id" uuid references auth.users(id) on delete cascade not null,
-  "trust_score" integer,
-  "consistency_score" integer,
-  "reciprocity_score" integer,
-  "attraction_score" integer,
-  "emotional_safety_score" integer,
-  "volatility_score" integer,
-  "repair_potential_score" integer,
-  "relationship_potential_score" integer,
-  "updated_at" timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Story reports table
-create table "public"."story_reports" (
-  "id" uuid primary key default uuid_generate_v4(),
-  "story_id" uuid references "public"."stories"(id) on delete cascade not null,
-  "user_id" uuid references auth.users(id) on delete cascade not null,
-  "report_type" text not null,
-  "title" text not null,
-  "content" text,
-  "content_encrypted" text,
-  "is_encrypted" boolean default false,
-  "created_at" timestamp with time zone default timezone('utc'::text, now()) not null,
-  "updated_at" timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
--- Add indexes for common queries
-create index idx_stories_user_id on "public"."stories"(user_id);
-create index idx_stories_updated_at on "public"."stories"(updated_at);
-
--- RLS Policies with security comments
-comment on policy "Users can only access their own stories" on "public"."stories" is 
-'Restricts access to stories to their owner only';
-
-create policy "Users can only access their own stories"
-on "public"."stories"
-as permissive
-for all
-to authenticated
-using (auth.uid() = user_id)
-with check (auth.uid() = user_id);
-
-create policy "Users can only access their own story profiles"
-on "public"."story_profiles"
-as permissive
-for all
-to authenticated
-using (auth.uid() = user_id)
-with check (auth.uid() = user_id);
-
-create policy "Users can only access their own story events"
-on "public"."story_events"
-as permissive
-for all
-to authenticated
-using (auth.uid() = user_id)
-with check (auth.uid() = user_id);
-
-create policy "Users can only access their own story notes"
-on "public"."story_notes"
-as permissive
-for all
-to authenticated
-using (auth.uid() = user_id)
-with check (auth.uid() = user_id);
-
-create policy "Users can only access their own story scores"
-on "public"."story_scores"
-as permissive
-for all
-to authenticated
-using (auth.uid() = user_id)
-with check (auth.uid() = user_id);
-
-create policy "Users can only access their own story reports"
-on "public"."story_reports"
-as permissive
-for all
-to authenticated
-using (auth.uid() = user_id)
-with check (auth.uid() = user_id);
+-- Add triggers to all tables
+DO $$
+DECLARE
+  tbl TEXT;
+BEGIN
+  FOR tbl IN 
+    SELECT table_name 
+    FROM information_schema.tables 
+    WHERE table_schema = 'public' 
+    AND table_name IN (
+      'stories', 'story_profiles', 'story_events',
+      'story_notes', 'story_scores', 'story_reports'
+    )
+  LOOP
+    EXECUTE format('CREATE TRIGGER update_%I_timestamp
+      BEFORE UPDATE ON %I
+      FOR EACH ROW EXECUTE FUNCTION update_timestamp()', tbl, tbl);
+  END LOOP;
+END
+$$;
