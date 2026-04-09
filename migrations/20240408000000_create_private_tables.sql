@@ -1,8 +1,20 @@
--- Ensure extensions are enabled
-create extension if not exists "uuid-ossp";
-create extension if not exists "pgcrypto";
+-- Ensure extensions are enabled with error handling
+do $$
+begin
+  create extension if not exists "uuid-ossp";
+exception when others then
+  raise warning 'Failed to create uuid-ossp extension: %', sqlerrm;
+end $$;
 
--- Enable RLS for all tables
+do $$
+begin
+  create extension if not exists "pgcrypto";
+exception when others then
+  raise warning 'Failed to create pgcrypto extension: %', sqlerrm;
+end $$;
+
+-- Enable RLS for all tables with security comments
+comment on table "public"."stories" is 'Private story workspaces protected by RLS';
 alter table "public"."stories" enable row level security;
 alter table "public"."story_profiles" enable row level security;
 alter table "public"."story_events" enable row level security;
@@ -90,7 +102,14 @@ create table "public"."story_reports" (
   "updated_at" timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- RLS Policies
+-- Add indexes for common queries
+create index idx_stories_user_id on "public"."stories"(user_id);
+create index idx_stories_updated_at on "public"."stories"(updated_at);
+
+-- RLS Policies with security comments
+comment on policy "Users can only access their own stories" on "public"."stories" is 
+'Restricts access to stories to their owner only';
+
 create policy "Users can only access their own stories"
 on "public"."stories"
 as permissive
