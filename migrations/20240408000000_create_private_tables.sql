@@ -1,21 +1,44 @@
--- Ensure extensions are enabled with error handling
+-- Ensure extensions are enabled with robust error handling
 do $$
 begin
-  create extension if not exists "uuid-ossp";
+  if not exists (select 1 from pg_extension where extname = 'uuid-ossp') then
+    create extension "uuid-ossp";
+    raise notice 'Created uuid-ossp extension';
+  end if;
 exception when others then
   raise warning 'Failed to create uuid-ossp extension: %', sqlerrm;
 end $$;
 
 do $$
 begin
-  create extension if not exists "pgcrypto";
+  if not exists (select 1 from pg_extension where extname = 'pgcrypto') then
+    create extension "pgcrypto";
+    raise notice 'Created pgcrypto extension';
+  end if;
 exception when others then
   raise warning 'Failed to create pgcrypto extension: %', sqlerrm;
 end $$;
 
--- Enable RLS for all tables with security comments
-comment on table "public"."stories" is 'Private story workspaces protected by RLS';
-alter table "public"."stories" enable row level security;
+-- Enable RLS for all tables with security comments and existence checks
+do $$
+declare
+  table_name text;
+begin
+  for table_name in 
+    select table_name 
+    from information_schema.tables 
+    where table_schema = 'public' 
+    and table_name in (
+      'stories', 'story_profiles', 'story_events', 
+      'story_notes', 'story_scores', 'story_reports'
+    )
+  loop
+    execute format('comment on table public.%I is %L', 
+      table_name, 'Private story data protected by RLS');
+    execute format('alter table public.%I enable row level security', table_name);
+    raise notice 'Enabled RLS for table: %', table_name;
+  end loop;
+end $$;
 alter table "public"."story_profiles" enable row level security;
 alter table "public"."story_events" enable row level security;
 alter table "public"."story_notes" enable row level security;
