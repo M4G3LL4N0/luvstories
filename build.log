@@ -5,15 +5,15 @@
 ▲ Next.js 16.2.2 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 1732ms
+✓ Compiled successfully in 1807ms
   Running TypeScript ...
-  Finished TypeScript in 1358ms ...
+  Finished TypeScript in 1589ms ...
   Collecting page data using 7 workers ...
   Generating static pages using 7 workers (0/7) ...
   Generating static pages using 7 workers (1/7) 
   Generating static pages using 7 workers (3/7) 
   Generating static pages using 7 workers (5/7) 
-✓ Generating static pages using 7 workers (7/7) in 89ms
+✓ Generating static pages using 7 workers (7/7) in 110ms
   Finalizing page optimization ...
 
 Route (app)
@@ -21,7 +21,8 @@ Route (app)
 ├ ƒ /_not-found
 ├ ƒ /auth/callback
 ├ ƒ /dashboard
-└ ƒ /login
+├ ƒ /login
+└ ƒ /stories/[id]
 
 
 ƒ  (Dynamic)  server-rendered on demand
