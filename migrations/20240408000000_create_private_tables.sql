@@ -49,14 +49,25 @@ BEGIN
     )
   LOOP
     BEGIN
-      EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', tbl);
-      
-      EXECUTE format('CREATE POLICY "Users can only access their own rows" 
-        ON %I FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id)', tbl);
-      
-      RAISE NOTICE 'Enabled RLS and created policy for table: %', tbl;
+      -- Double check table exists before attempting operations
+      IF EXISTS (SELECT 1 FROM information_schema.tables 
+                WHERE table_schema = 'public' AND table_name = tbl) THEN
+        
+        EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', tbl);
+        
+        -- Skip if policy already exists
+        IF NOT EXISTS (SELECT 1 FROM pg_policies 
+                      WHERE schemaname = 'public' 
+                      AND tablename = tbl 
+                      AND policyname = 'Users can only access their own rows') THEN
+          EXECUTE format('CREATE POLICY "Users can only access their own rows" 
+            ON %I FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id)', tbl);
+        END IF;
+        
+        RAISE NOTICE 'Ensured RLS and policy for table: %', tbl;
+      END IF;
     EXCEPTION WHEN OTHERS THEN
-      RAISE WARNING 'Failed to enable RLS/policy for table %: %', tbl, SQLERRM;
+      RAISE WARNING 'Failed to modify table %: %', tbl, SQLERRM;
     END;
   END LOOP;
 END
@@ -86,17 +97,26 @@ BEGIN
     )
   LOOP
     BEGIN
-      -- First drop existing trigger if it exists
-      EXECUTE format('DROP TRIGGER IF EXISTS update_%I_timestamp ON %I', tbl, tbl);
-      
-      -- Create new trigger
-      EXECUTE format('CREATE TRIGGER update_%I_timestamp
-        BEFORE UPDATE ON %I
-        FOR EACH ROW EXECUTE FUNCTION update_timestamp()', tbl, tbl);
+      -- Double check table exists before attempting operations
+      IF EXISTS (SELECT 1 FROM information_schema.tables 
+                WHERE table_schema = 'public' AND table_name = tbl) THEN
         
-      RAISE NOTICE 'Created timestamp trigger for table: %', tbl;
+        -- Only drop existing trigger if it exists
+        IF EXISTS (SELECT 1 FROM pg_trigger 
+                  WHERE tgname = format('update_%I_timestamp', tbl) 
+                  AND tgrelid = format('public.%I', tbl)::regclass) THEN
+          EXECUTE format('DROP TRIGGER update_%I_timestamp ON %I', tbl, tbl);
+        END IF;
+        
+        -- Create new trigger
+        EXECUTE format('CREATE TRIGGER update_%I_timestamp
+          BEFORE UPDATE ON %I
+          FOR EACH ROW EXECUTE FUNCTION update_timestamp()', tbl, tbl);
+          
+        RAISE NOTICE 'Ensured timestamp trigger for table: %', tbl;
+      END IF;
     EXCEPTION WHEN OTHERS THEN
-      RAISE WARNING 'Failed to create trigger for table %: %', tbl, SQLERRM;
+      RAISE WARNING 'Failed to modify triggers for table %: %', tbl, SQLERRM;
     END;
   END LOOP;
 END
