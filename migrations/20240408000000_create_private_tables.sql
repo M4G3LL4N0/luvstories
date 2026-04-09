@@ -1,3 +1,7 @@
+-- Ensure extensions are enabled
+create extension if not exists "uuid-ossp";
+create extension if not exists "pgcrypto";
+
 -- Enable RLS for all tables
 alter table "public"."stories" enable row level security;
 alter table "public"."story_profiles" enable row level security;
