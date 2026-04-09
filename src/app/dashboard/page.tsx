@@ -2,14 +2,6 @@ import { redirect } from 'next/navigation';
 import StoriesList from '@/components/stories/StoriesList';
 import { createServer } from '@/lib/supabase/server';
 
-type Story = {
-  id: string;
-  title: string;
-  status?: string | null;
-  privacy_level?: string | null;
-  updated_at?: string | null;
-};
-
 export default async function Dashboard() {
   const supabase = await createServer();
 
@@ -22,29 +14,51 @@ export default async function Dashboard() {
     redirect('/login');
   }
 
-  const { data: existingStory } = await supabase
-    .from('stories')
-    .select('id')
-    .eq('user_id', user.id)
-    .limit(1)
-    .maybeSingle();
-
-  if (!existingStory) {
-    await supabase.from('stories').insert({
-      user_id: user.id,
-      title: 'Me & Val',
-      status: 'active',
-      privacy_level: 'private',
-    });
-  }
-
-  const { data, error } = await supabase
+  // Check if user has any stories
+  const { data: stories, error } = await supabase
     .from('stories')
     .select('id, title, status, privacy_level, updated_at')
     .eq('user_id', user.id)
     .order('updated_at', { ascending: false });
 
-  const stories: Story[] = error || !data ? [] : data;
+  if (error || !stories || stories.length === 0) {
+    // Seed initial story if none exist
+    const { data: newStory } = await supabase
+      .from('stories')
+      .insert({
+        user_id: user.id,
+        title: 'Me & Val',
+        status: 'active',
+        privacy_level: 'private',
+      })
+      .select('id')
+      .single();
+
+    if (newStory) {
+      // Create initial profile
+      await supabase.from('story_profiles').insert({
+        story_id: newStory.id,
+        user_id: user.id,
+        subject_name: 'Val',
+        relationship_type: 'Romantic',
+        summary: 'Our journey together',
+      });
+
+      // Create initial scores
+      await supabase.from('story_scores').insert({
+        story_id: newStory.id,
+        user_id: user.id,
+        trust_score: 75,
+        consistency_score: 80,
+        reciprocity_score: 70,
+        attraction_score: 85,
+        emotional_safety_score: 65,
+        volatility_score: 40,
+        repair_potential_score: 80,
+        relationship_potential_score: 75,
+      });
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#050816] text-white">
@@ -62,7 +76,7 @@ export default async function Dashboard() {
           </p>
         </div>
 
-        <StoriesList stories={stories} />
+        <StoriesList stories={stories || []} />
       </div>
     </main>
   );

@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LuvStories - Private Relationship Intelligence
 
-## Getting Started
+LuvStories is a private relationship intelligence platform that helps users build, understand, and shape their love stories through private workspaces.
 
-First, run the development server:
+## Features
+
+- Private story workspaces
+- Relationship timeline tracking
+- Secure notes and reports
+- Relationship scoring system
+- End-to-end encryption support
+- Privacy-first architecture
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a `.env` file with the following variables:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+NEXT_PUBLIC_ENCRYPTION_SECRET=your-encryption-secret
+```
+
+4. Run the SQL migrations in your Supabase database:
+
+```sql
+-- Run the migrations from migrations/20240408000000_create_private_tables.sql
+```
+
+5. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database Schema
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application uses the following tables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `stories`: Main story workspaces
+- `story_profiles`: Relationship profiles
+- `story_events`: Timeline events
+- `story_notes`: Private notes
+- `story_scores`: Relationship scores
+- `story_reports`: Generated reports
 
-## Learn More
+All tables are protected by Row Level Security (RLS) and can only be accessed by the owning user.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The easiest way to deploy is using Vercel:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+vercel deploy
+```
 
-## Deploy on Vercel
+## Security
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application includes:
+- Row Level Security on all tables
+- Optional end-to-end encryption for sensitive data
+- Secure authentication flow
+- Privacy-first architecture
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+All user data is private and never shared.
