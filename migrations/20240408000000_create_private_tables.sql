@@ -48,10 +48,16 @@ BEGIN
       'story_notes', 'story_scores', 'story_reports'
     )
   LOOP
-    EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', tbl);
-    
-    EXECUTE format('CREATE POLICY "Users can only access their own rows" 
-      ON %I FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id)', tbl);
+    BEGIN
+      EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', tbl);
+      
+      EXECUTE format('CREATE POLICY "Users can only access their own rows" 
+        ON %I FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id)', tbl);
+      
+      RAISE NOTICE 'Enabled RLS and created policy for table: %', tbl;
+    EXCEPTION WHEN OTHERS THEN
+      RAISE WARNING 'Failed to enable RLS/policy for table %: %', tbl, SQLERRM;
+    END;
   END LOOP;
 END
 $$;
@@ -79,9 +85,19 @@ BEGIN
       'story_notes', 'story_scores', 'story_reports'
     )
   LOOP
-    EXECUTE format('CREATE TRIGGER update_%I_timestamp
-      BEFORE UPDATE ON %I
-      FOR EACH ROW EXECUTE FUNCTION update_timestamp()', tbl, tbl);
+    BEGIN
+      -- First drop existing trigger if it exists
+      EXECUTE format('DROP TRIGGER IF EXISTS update_%I_timestamp ON %I', tbl, tbl);
+      
+      -- Create new trigger
+      EXECUTE format('CREATE TRIGGER update_%I_timestamp
+        BEFORE UPDATE ON %I
+        FOR EACH ROW EXECUTE FUNCTION update_timestamp()', tbl, tbl);
+        
+      RAISE NOTICE 'Created timestamp trigger for table: %', tbl;
+    EXCEPTION WHEN OTHERS THEN
+      RAISE WARNING 'Failed to create trigger for table %: %', tbl, SQLERRM;
+    END;
   END LOOP;
 END
 $$;
