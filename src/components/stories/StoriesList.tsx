@@ -10,7 +10,20 @@ function formatDate(value?: string | null) {
   if (!value) return "No recent update";
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "No recent update";
-  return date.toLocaleDateString();
+  
+  const now = new Date();
+  const diff = now.getTime() - date.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  
+  if (days === 0) return "Today";
+  if (days === 1) return "Yesterday";
+  if (days < 7) return `${days} days ago`;
+  
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
 }
 
 export default function StoriesList({ 
@@ -62,7 +75,11 @@ export default function StoriesList({
         {stories.map((story) => (
           <div
             key={story.id}
-            className="rounded-2xl border border-white/10 bg-black/20 p-4"
+            className="rounded-2xl border border-white/10 bg-black/20 p-4 transition-all hover:border-white/20 hover:bg-black/30 cursor-pointer"
+            onClick={() => {
+              // TODO: Handle story click
+              console.log('Story clicked:', story.id);
+            }}
           >
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <div>
