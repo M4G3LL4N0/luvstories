@@ -351,10 +351,10 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
             <p className="text-lg italic leading-8 text-white/65">
-              "LuvStories helped me see patterns in my relationship I was too close to notice. The timeline visualization was a game-changer."
+              "The timeline visualization helped me see patterns I was too close to notice. It's been transformative."
             </p>
             <div className="mt-4 text-sm font-medium text-white/85">
               — Sarah K., Therapist
@@ -366,6 +366,14 @@ export default function HomePage() {
             </p>
             <div className="mt-4 text-sm font-medium text-white/85">
               — Michael T., Engineer
+            </div>
+          </div>
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <p className="text-lg italic leading-8 text-white/65">
+              "The relationship health metrics gave me concrete ways to track progress and identify areas to improve."
+            </p>
+            <div className="mt-4 text-sm font-medium text-white/85">
+              — Emily R., Writer
             </div>
           </div>
         </div>
@@ -381,23 +389,41 @@ export default function HomePage() {
           </h2>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-4 md:grid-cols-2">
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
             <div className="text-lg font-semibold">Is my data really private?</div>
             <p className="mt-2 text-sm leading-7 text-white/65">
-              Yes. We use Supabase's row-level security so your data is only accessible to you. Sensitive content is encrypted before being stored.
+              Yes. We use Supabase's row-level security and AES-256 encryption. Your data is only accessible to you and never shared.
             </p>
           </div>
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
             <div className="text-lg font-semibold">How does the scoring work?</div>
             <p className="mt-2 text-sm leading-7 text-white/65">
-              Scores are calculated based on your input data and known relationship patterns. You control what factors are included.
+              Scores are calculated based on your input data and psychological research on relationship patterns. You control what factors are included.
             </p>
           </div>
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
             <div className="text-lg font-semibold">Can I export my data?</div>
             <p className="mt-2 text-sm leading-7 text-white/65">
-              Absolutely. You can export all your stories and data at any time in JSON format.
+              Yes. You can export all your stories and data at any time in JSON format. Your encrypted notes remain protected.
+            </p>
+          </div>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-lg font-semibold">What makes this different?</div>
+            <p className="mt-2 text-sm leading-7 text-white/65">
+              LuvStories combines private journaling with relationship pattern analysis and future path modeling - all in one secure workspace.
+            </p>
+          </div>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-lg font-semibold">Is this therapy?</div>
+            <p className="mt-2 text-sm leading-7 text-white/65">
+              No. LuvStories is a private relationship intelligence tool, not a substitute for professional therapy or counseling.
+            </p>
+          </div>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-lg font-semibold">Can I try it free?</div>
+            <p className="mt-2 text-sm leading-7 text-white/65">
+              Yes. Start with a free account to explore the core features before upgrading for advanced analytics and reports.
             </p>
           </div>
         </div>
