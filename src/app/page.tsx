@@ -221,6 +221,27 @@ export default function HomePage() {
             </p>
           </div>
         </div>
+
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-xl font-semibold">1. Add Moments</div>
+            <p className="mt-3 text-sm leading-7 text-white/65">
+              Record key events, messages, and interactions with timestamps and emotional context.
+            </p>
+          </div>
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-xl font-semibold">2. Build Timeline</div>
+            <p className="mt-3 text-sm leading-7 text-white/65">
+              See your relationship story unfold chronologically with automatic pattern detection.
+            </p>
+          </div>
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-xl font-semibold">3. Gain Insight</div>
+            <p className="mt-3 text-sm leading-7 text-white/65">
+              Get scores, reports and future path modeling based on your unique data.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section id="product" className="mx-auto max-w-7xl px-6 py-6 lg:py-10">
@@ -285,6 +306,14 @@ export default function HomePage() {
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
                 <span>Open-source security model with regular audits</span>
               </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
+                <span>GDPR-compliant data handling</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
+                <span>Optional local-only storage mode</span>
+              </li>
             </ul>
           </div>
 
@@ -317,6 +346,9 @@ export default function HomePage() {
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
             Helping people see clearly
           </h2>
+          <p className="mt-4 text-lg leading-8 text-white/65">
+            Used by individuals, couples, and professionals to gain clarity and make better relationship decisions.
+          </p>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2">
