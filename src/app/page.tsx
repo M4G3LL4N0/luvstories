@@ -2,20 +2,34 @@ import Link from "next/link";
 
 const featureCards = [
   {
-    title: "Private Story Files",
-    body: "Create a private story for each relationship, with chapters, turning points, message context, and timeline reconstruction.",
+    title: "Private Relationship Workspace",
+    body: "Each story is a secure, private workspace for organizing messages, memories, and insights about a relationship.",
+    icon: "window.svg"
   },
   {
-    title: "Story Intelligence",
-    body: "Transform moments, signals, and conflicts into clear insight about patterns, trajectory, and what to do next.",
+    title: "Timeline Reconstruction",
+    body: "Build a clear timeline of key moments, turning points, and patterns to understand how the relationship evolved.",
+    icon: "globe.svg"
   },
   {
-    title: "Possible Story Paths",
-    body: "See likely paths, risks, growth opportunities, and how your choices may shape what happens next.",
+    title: "Insightful Notes & Reports",
+    body: "Add private notes, generate relationship reports, and track important details with end-to-end encryption.",
+    icon: "file.svg"
   },
   {
-    title: "Privacy First",
-    body: "Built for deeply personal relationship data, with strong privacy architecture as a core product feature from day one.",
+    title: "Relationship Scoring",
+    body: "Track key relationship health metrics like trust, stability, and emotional safety over time.",
+    icon: "vercel.svg"
+  },
+  {
+    title: "Future Story Paths",
+    body: "See likely trajectories, risks, and opportunities based on current patterns and choices.",
+    icon: "next.svg"
+  },
+  {
+    title: "Privacy-First Architecture",
+    body: "Built with row-level security, encrypted storage, and strict access controls to protect your sensitive data.",
+    icon: "file.svg"
   },
 ];
 
@@ -190,7 +204,14 @@ export default function HomePage() {
               key={card.title}
               className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6"
             >
-              <div className="text-xl font-semibold">{card.title}</div>
+              <div className="flex items-center gap-3">
+                <img 
+                  src={`/${card.icon}`}
+                  alt=""
+                  className="h-6 w-6 opacity-70"
+                />
+                <div className="text-xl font-semibold">{card.title}</div>
+              </div>
               <p className="mt-3 text-sm leading-7 text-white/65">{card.body}</p>
             </div>
           ))}
