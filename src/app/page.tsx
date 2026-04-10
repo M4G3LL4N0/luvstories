@@ -75,11 +75,12 @@ export default function HomePage() {
           </div>
 
           <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] tracking-[-0.04em] text-white md:text-7xl">
-            Your private relationship intelligence system
+            A private space for relationship clarity
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
-            LuvStories helps you organize, understand, and navigate relationships through private timelines, pattern analysis, and decision support - all in one secure workspace.
+            LuvStories helps you see patterns, track important moments, and make 
+            better decisions - with complete privacy and control over your data.
           </p>
 
           <div className="mt-8 grid max-w-2xl grid-cols-1 gap-3 text-sm text-white/65 sm:grid-cols-2">
@@ -219,7 +220,8 @@ export default function HomePage() {
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
             <div className="text-xl font-semibold">1. Capture</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              Securely record key moments, messages, and interactions with timestamps and context.
+              Add messages, events, and notes with optional encryption. Everything is timestamped 
+              and organized automatically.
             </p>
           </div>
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
@@ -298,10 +300,10 @@ export default function HomePage() {
               Privacy & Security
             </div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-              Military-grade privacy for your stories
+              Your relationship data belongs only to you
             </h2>
             <p className="mt-4 text-lg leading-8 text-white/65">
-              We've built LuvStories from the ground up to protect your most sensitive data:
+              Every story is protected by multiple layers of security:
             </p>
             <ul className="mt-4 space-y-3 text-white/65">
               <li className="flex items-start gap-2">
