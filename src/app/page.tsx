@@ -188,6 +188,41 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section id="how-it-works" className="mx-auto max-w-7xl px-6 py-20">
+        <div className="mb-12 max-w-3xl">
+          <div className="text-sm uppercase tracking-[0.2em] text-white/40">
+            How It Works
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
+            Transform moments into meaningful patterns
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-white/65">
+            LuvStories helps you track, analyze and understand relationship patterns through a simple 3-step process:
+          </p>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-3">
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-xl font-semibold">1. Add Moments</div>
+            <p className="mt-3 text-sm leading-7 text-white/65">
+              Record key events, messages, and interactions with timestamps and emotional context.
+            </p>
+          </div>
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-xl font-semibold">2. Build Timeline</div>
+            <p className="mt-3 text-sm leading-7 text-white/65">
+              See your relationship story unfold chronologically with automatic pattern detection.
+            </p>
+          </div>
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-xl font-semibold">3. Gain Insight</div>
+            <p className="mt-3 text-sm leading-7 text-white/65">
+              Get scores, reports and future path modeling based on your unique data.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section id="product" className="mx-auto max-w-7xl px-6 py-6 lg:py-10">
         <div className="mb-8 max-w-2xl">
           <div className="text-sm uppercase tracking-[0.2em] text-white/40">
@@ -196,9 +231,12 @@ export default function HomePage() {
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
             A private operating system for relationship clarity
           </h2>
+          <p className="mt-4 text-lg leading-8 text-white/65">
+            Designed for those who want to understand their relationships with the same rigor they apply to other important areas of life.
+          </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {featureCards.map((card) => (
             <div
               key={card.title}
@@ -222,11 +260,32 @@ export default function HomePage() {
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <div className="text-sm uppercase tracking-[0.2em] text-white/40">
-              Privacy
+              Privacy & Security
             </div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-              Strong privacy is part of the product, not an afterthought.
+              Your data stays yours, always
             </h2>
+            <p className="mt-4 text-lg leading-8 text-white/65">
+              We use multiple layers of protection to keep your stories private:
+            </p>
+            <ul className="mt-4 space-y-3 text-white/65">
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
+                <span>Row-level security ensures only you can access your data</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
+                <span>End-to-end encryption for sensitive notes and reports</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
+                <span>No third-party tracking or data sharing</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
+                <span>Open-source security model with regular audits</span>
+              </li>
+            </ul>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -250,7 +309,69 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="future" className="mx-auto max-w-7xl px-6 pb-24">
+      <section id="testimonials" className="mx-auto max-w-7xl px-6 py-20">
+        <div className="mb-8 max-w-2xl">
+          <div className="text-sm uppercase tracking-[0.2em] text-white/40">
+            Trusted By
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
+            Helping people see clearly
+          </h2>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <p className="text-lg italic leading-8 text-white/65">
+              "LuvStories helped me see patterns in my relationship I was too close to notice. The timeline visualization was a game-changer."
+            </p>
+            <div className="mt-4 text-sm font-medium text-white/85">
+              — Sarah K., Therapist
+            </div>
+          </div>
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
+            <p className="text-lg italic leading-8 text-white/65">
+              "Finally a tool that respects privacy while helping me make better relationship decisions."
+            </p>
+            <div className="mt-4 text-sm font-medium text-white/85">
+              — Michael T., Engineer
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="mx-auto max-w-7xl px-6 py-20">
+        <div className="mb-8 max-w-2xl">
+          <div className="text-sm uppercase tracking-[0.2em] text-white/40">
+            FAQ
+          </div>
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
+            Common questions
+          </h2>
+        </div>
+
+        <div className="grid gap-4">
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-lg font-semibold">Is my data really private?</div>
+            <p className="mt-2 text-sm leading-7 text-white/65">
+              Yes. We use Supabase's row-level security so your data is only accessible to you. Sensitive content is encrypted before being stored.
+            </p>
+          </div>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-lg font-semibold">How does the scoring work?</div>
+            <p className="mt-2 text-sm leading-7 text-white/65">
+              Scores are calculated based on your input data and known relationship patterns. You control what factors are included.
+            </p>
+          </div>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
+            <div className="text-lg font-semibold">Can I export my data?</div>
+            <p className="mt-2 text-sm leading-7 text-white/65">
+              Absolutely. You can export all your stories and data at any time in JSON format.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta" className="mx-auto max-w-7xl px-6 pb-24">
         <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.03] p-8 md:p-10">
           <div className="max-w-3xl">
             <div className="text-sm uppercase tracking-[0.2em] text-white/40">
