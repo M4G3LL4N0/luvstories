@@ -105,7 +105,7 @@ export default function HomePage() {
                   <div className="text-xs uppercase tracking-[0.2em] text-white/45">
                     Story Dashboard
                   </div>
-                  <div className="mt-1 text-2xl font-semibold">Me &amp; Val</div>
+                  <div className="mt-1 text-2xl font-semibold">Ethan &amp; Mia</div>
                 </div>
                 <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
                   Private
@@ -246,10 +246,10 @@ export default function HomePage() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               {[
-                "Project Val",
-                "Story dashboards",
+                "Private dashboards",
                 "Message coaching",
                 "Secure accounts",
+                "Story timelines",
                 "Future path modeling",
               ].map((tag) => (
                 <div
