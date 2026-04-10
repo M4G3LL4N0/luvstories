@@ -75,14 +75,27 @@ export default function HomePage() {
           </div>
 
           <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] tracking-[-0.04em] text-white md:text-7xl">
-            Build, understand, and shape your love story.
+            Your private relationship intelligence system
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
-            LuvStories turns moments, messages, conflicts, and memories into a
-            private relationship workspace with timelines, insight, visual
-            dashboards, and future story paths.
+            LuvStories helps you organize, understand, and navigate relationships through private timelines, pattern analysis, and decision support - all in one secure workspace.
           </p>
+
+          <div className="mt-8 grid max-w-2xl grid-cols-1 gap-3 text-sm text-white/65 sm:grid-cols-2">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              For individuals seeking clarity in complex relationships
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              Designed for privacy-first relationship reflection
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              Helps identify patterns and make better decisions
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+              Built on secure, encrypted architecture
+            </div>
+          </div>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
@@ -195,51 +208,51 @@ export default function HomePage() {
             How It Works
           </div>
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-            Transform moments into meaningful patterns
+            Your private relationship workflow
           </h2>
           <p className="mt-4 text-lg leading-8 text-white/65">
-            LuvStories helps you track, analyze and understand relationship patterns through a simple 3-step process:
+            LuvStories organizes your relationship data into a structured workflow:
           </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">1. Add Moments</div>
+            <div className="text-xl font-semibold">1. Capture</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              Record key events, messages, and interactions with timestamps and emotional context.
+              Securely record key moments, messages, and interactions with timestamps and context.
             </p>
           </div>
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">2. Build Timeline</div>
+            <div className="text-xl font-semibold">2. Organize</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              See your relationship story unfold chronologically with automatic pattern detection.
+              Build a private timeline that shows patterns and turning points in your relationship.
             </p>
           </div>
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">3. Gain Insight</div>
+            <div className="text-xl font-semibold">3. Analyze</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              Get scores, reports and future path modeling based on your unique data.
+              Get insights through relationship health metrics and pattern analysis.
             </p>
           </div>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">1. Add Moments</div>
+            <div className="text-xl font-semibold">4. Reflect</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              Record key events, messages, and interactions with timestamps and emotional context.
+              Add private notes and journal entries to process your thoughts and feelings.
             </p>
           </div>
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">2. Build Timeline</div>
+            <div className="text-xl font-semibold">5. Decide</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              See your relationship story unfold chronologically with automatic pattern detection.
+              Use insights to make better relationship decisions with clarity and confidence.
             </p>
           </div>
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">3. Gain Insight</div>
+            <div className="text-xl font-semibold">6. Grow</div>
             <p className="mt-3 text-sm leading-7 text-white/65">
-              Get scores, reports and future path modeling based on your unique data.
+              Track progress over time and identify areas for personal and relationship growth.
             </p>
           </div>
         </div>
@@ -285,55 +298,55 @@ export default function HomePage() {
               Privacy & Security
             </div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-              Your data stays yours, always
+              Military-grade privacy for your stories
             </h2>
             <p className="mt-4 text-lg leading-8 text-white/65">
-              We use multiple layers of protection to keep your stories private:
+              We've built LuvStories from the ground up to protect your most sensitive data:
             </p>
             <ul className="mt-4 space-y-3 text-white/65">
               <li className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Row-level security ensures only you can access your data</span>
+                <span>Row-level security ensures only you can access your stories</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>End-to-end encryption for sensitive notes and reports</span>
+                <span>AES-256 encryption for all sensitive notes and reports</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>No third-party tracking or data sharing</span>
+                <span>Zero-knowledge architecture - we never see your unencrypted data</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Open-source security model with regular audits</span>
+                <span>Open-source security model with regular third-party audits</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>GDPR-compliant data handling</span>
+                <span>GDPR & CCPA compliant data handling</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Optional local-only storage mode</span>
+                <span>Optional local-only storage mode for maximum privacy</span>
               </li>
             </ul>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <PrivacyCard
-              title="Private by default"
-              body="Stories are intended to be account-scoped and inaccessible to anyone else."
+              title="Private by design"
+              body="Your stories are encrypted at rest and inaccessible to anyone else, including us."
             />
             <PrivacyCard
-              title="Secure architecture"
-              body="Built for row-level protection, encrypted storage, and controlled access patterns."
+              title="Zero-knowledge architecture"
+              body="We never see your unencrypted data. Your encryption keys stay with you."
             />
             <PrivacyCard
-              title="Sensitive-data aware"
-              body="Designed for highly personal context, notes, and relationship history."
+              title="Audited security"
+              body="Our security model is regularly tested by independent third parties."
             />
             <PrivacyCard
-              title="Founder-aligned"
-              body="The first account can be your own live story workspace from day one."
+              title="Data ownership"
+              body="You own all your data. Export or delete it anytime with one click."
             />
           </div>
         </div>
