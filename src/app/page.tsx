@@ -1,38 +1,8 @@
 import Link from "next/link";
+import { ProductHonestyNote } from "@/components/ProductHonestyNote";
+import { ProcessFlowSection } from "@/components/ProcessFlowSection";
 import { MetricCard } from "@/components/MetricCard";
-
-const featureCards = [
-  {
-    title: "Private Relationship Workspace",
-    body: "Each story is a secure, private workspace for organizing messages, memories, and insights about a relationship.",
-    icon: "window.svg"
-  },
-  {
-    title: "Timeline Reconstruction",
-    body: "Build a clear timeline of key moments, turning points, and patterns to understand how the relationship evolved.",
-    icon: "globe.svg"
-  },
-  {
-    title: "Insightful Notes & Reports",
-    body: "Add private notes, generate relationship reports, and track important details with end-to-end encryption.",
-    icon: "file.svg"
-  },
-  {
-    title: "Relationship Scoring",
-    body: "Track key relationship health metrics like trust, stability, and emotional safety over time.",
-    icon: "vercel.svg"
-  },
-  {
-    title: "Future Story Paths",
-    body: "See likely trajectories, risks, and opportunities based on current patterns and choices.",
-    icon: "next.svg"
-  },
-  {
-    title: "Privacy-First Architecture",
-    body: "Built with row-level security, encrypted storage, and strict access controls to protect your sensitive data.",
-    icon: "file.svg"
-  },
-];
+import { SiteHeader } from "@/components/site-header";
 
 const pillars = [
   "Timeline reconstruction",
@@ -43,82 +13,73 @@ const pillars = [
   "Private account workspaces",
 ];
 
+const featureCards = [
+  {
+    title: "Private Story Files",
+    body: "Each relationship becomes a private story file—chapters, events, notes, and scores stay in your account, not on a public feed.",
+    accent: "from-fuchsia-500/30 to-violet-500/20",
+  },
+  {
+    title: "Story Intelligence",
+    body: "Surface emotional patterns, volatility, and repair potential from your own timeline so decisions come from clarity, not confusion.",
+    accent: "from-violet-500/30 to-cyan-500/20",
+  },
+  {
+    title: "Possible Story Paths",
+    body: "Model where the narrative may head next—loops, repair arcs, or clean breaks—without pretending certainty where it does not exist.",
+    accent: "from-cyan-500/25 to-emerald-500/15",
+  },
+  {
+    title: "Privacy First",
+    body: "Strong privacy is part of the product, not an afterthought. Owner-scoped data, encryption-ready notes, and no public story pages.",
+    accent: "from-pink-500/25 to-rose-500/15",
+  },
+];
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#050816] text-white">
+    <div className="relative">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(130,86,255,0.22),transparent_28%),radial-gradient(circle_at_80%_20%,rgba(255,70,120,0.18),transparent_24%),linear-gradient(to_bottom,#070b1a,#050816,#03050d)]" />
 
-      <header className="border-b border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="text-xl font-semibold tracking-[0.18em] text-white/95">
-            LUVSTORIES
-          </div>
+      <SiteHeader />
 
-          <nav className="hidden gap-6 text-sm text-white/70 md:flex">
-            <a href="#product" className="transition hover:text-white">
-              Product
-            </a>
-            <a href="#privacy" className="transition hover:text-white">
-              Privacy
-            </a>
-            <a href="#future" className="transition hover:text-white">
-              Future
-            </a>
-          </nav>
-        </div>
-      </header>
-
-      <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+      <section data-stagger className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-28" data-reveal>
         <div>
           <div className="mb-5 inline-flex rounded-full border border-pink-400/20 bg-pink-400/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.22em] text-pink-200">
             Private Relationship Intelligence
           </div>
 
           <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] tracking-[-0.04em] text-white md:text-7xl">
-            A private space for relationship clarity
+            Build, understand, and shape your love story.
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
-            LuvStories helps you see patterns, track important moments, and make 
-            better decisions - with complete privacy and control over your data.
+            Turn moments, messages, conflicts, and memories into a private
+            relationship workspace—with timelines, insight, visual dashboards,
+            and future story paths you control.
           </p>
 
-          <div className="mt-8 grid max-w-2xl grid-cols-1 gap-3 text-sm text-white/65 sm:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-              For individuals seeking clarity in complex relationships
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-              Designed for privacy-first relationship reflection
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-              Helps identify patterns and make better decisions
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-              Built on secure, encrypted architecture
-            </div>
-          </div>
-
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+          <div data-stagger className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Link
               href="/login"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white px-6 py-3 text-sm font-medium text-black transition hover:scale-[1.01]"
+              className="motion-card motion-hover-lift inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white px-6 py-3 text-sm font-medium text-black transition hover:scale-[1.01]"
             >
               Log In
             </Link>
 
             <Link
               href="/signup"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10"
+              className="motion-card motion-hover-lift inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-medium text-white/90 transition hover:bg-white/10"
             >
               Create Account
             </Link>
           </div>
 
-          <div className="mt-10 grid max-w-2xl grid-cols-1 gap-3 text-sm text-white/65 sm:grid-cols-2">
+          <div data-stagger className="mt-10 grid max-w-2xl grid-cols-1 gap-3 text-sm text-white/65 sm:grid-cols-2">
             {pillars.map((item) => (
               <div
                 key={item}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                className="motion-card motion-hover-lift rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 backdrop-blur-sm"
               >
                 {item}
               </div>
@@ -127,7 +88,7 @@ export default function HomePage() {
         </div>
 
         <div className="relative">
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.05] p-4 shadow-2xl shadow-fuchsia-950/30 backdrop-blur">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.05] p-4 shadow-2xl shadow-fuchsia-950/30 backdrop-blur-xl">
             <div className="rounded-[1.6rem] border border-white/10 bg-[#0b1020]/95 p-5">
               <div className="flex items-center justify-between">
                 <div>
@@ -135,17 +96,18 @@ export default function HomePage() {
                     Story Dashboard
                   </div>
                   <div className="mt-1 text-2xl font-semibold">Ethan &amp; Mia</div>
+                  <div className="mt-1 text-xs text-white/45">Sample preview — not a real account</div>
                 </div>
                 <div className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
                   Private
                 </div>
               </div>
 
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <MetricCard label="Story Health" value="62" sub="Developing" />
-                <MetricCard label="Instability" value="71" sub="High" />
-                <MetricCard label="Repair Potential" value="68" sub="Possible" />
-                <MetricCard label="Clarity" value="44" sub="Low" />
+              <div data-stagger className="mt-6 grid gap-4 sm:grid-cols-2">
+                <MetricCard label="Story Health" value="Sample" sub="Illustrated" />
+                <MetricCard label="Instability" value="Sample" sub="Illustrated" />
+                <MetricCard label="Repair Potential" value="Sample" sub="Illustrated" />
+                <MetricCard label="Clarity" value="Sample" sub="Illustrated" />
               </div>
 
               <div className="mt-5 rounded-3xl border border-white/10 bg-white/[0.04] p-4">
@@ -153,9 +115,9 @@ export default function HomePage() {
                   Current Story Insight
                 </div>
                 <p className="mt-2 text-sm leading-7 text-white/65">
-                  Strong emotional engagement exists, but the pattern currently
-                  favors volatility over stability. The healthiest next move is
-                  calm, grounded consistency rather than pressure or escalation.
+                  Sample narrative: strong engagement can sit next to volatility.
+                  The product is for organizing your own notes — it does not score
+                  a real couple or claim a measured outcome.
                 </p>
               </div>
 
@@ -182,16 +144,15 @@ export default function HomePage() {
                     Best Next Move
                   </div>
                   <p className="mt-2 text-sm leading-7 text-white/65">
-                    Reduce emotional overload. Keep messages simple, warm, and
-                    non-pressuring. Build stability before trying to force
-                    certainty.
+                    Sample coaching copy for the preview only. Keep messages simple
+                    and non-pressuring while you decide what evidence you still need.
                   </p>
 
                   <div className="mt-5 text-sm font-medium text-white/85">
                     Most Likely Story Path
                   </div>
-                  <div className="mt-2 rounded-2xl border border-amber-300/15 bg-amber-300/10 px-3 py-2 text-sm text-amber-100">
-                    Loop Path — high intensity, inconsistent clarity
+                  <div className="motion-card motion-hover-lift mt-2 rounded-2xl border border-amber-300/15 bg-amber-300/10 px-3 py-2 text-sm text-amber-100">
+                    Loop Path — illustrated, not a prediction
                   </div>
                 </div>
               </div>
@@ -203,270 +164,98 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="how-it-works" className="mx-auto max-w-7xl px-6 py-20">
+      <section id="product" className="mx-auto max-w-7xl px-6 py-16 lg:py-20" data-reveal>
         <div className="mb-12 max-w-3xl">
-          <div className="text-sm uppercase tracking-[0.2em] text-white/40">
-            How It Works
-          </div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-            Your private relationship workflow
-          </h2>
-          <p className="mt-4 text-lg leading-8 text-white/65">
-            LuvStories organizes your relationship data into a structured workflow:
-          </p>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-3">
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">1. Capture</div>
-            <p className="mt-3 text-sm leading-7 text-white/65">
-              Add messages, events, and notes with optional encryption. Everything is timestamped 
-              and organized automatically.
-            </p>
-          </div>
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">2. Organize</div>
-            <p className="mt-3 text-sm leading-7 text-white/65">
-              Build a private timeline that shows patterns and turning points in your relationship.
-            </p>
-          </div>
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">3. Analyze</div>
-            <p className="mt-3 text-sm leading-7 text-white/65">
-              Get insights through relationship health metrics and pattern analysis.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">4. Reflect</div>
-            <p className="mt-3 text-sm leading-7 text-white/65">
-              Add private notes and journal entries to process your thoughts and feelings.
-            </p>
-          </div>
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">5. Decide</div>
-            <p className="mt-3 text-sm leading-7 text-white/65">
-              Use insights to make better relationship decisions with clarity and confidence.
-            </p>
-          </div>
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-xl font-semibold">6. Grow</div>
-            <p className="mt-3 text-sm leading-7 text-white/65">
-              Track progress over time and identify areas for personal and relationship growth.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="product" className="mx-auto max-w-7xl px-6 py-6 lg:py-10">
-        <div className="mb-8 max-w-2xl">
           <div className="text-sm uppercase tracking-[0.2em] text-white/40">
             Product
           </div>
           <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-            A private operating system for relationship clarity
+            A private relationship workspace—not a dating app
           </h2>
           <p className="mt-4 text-lg leading-8 text-white/65">
-            Designed for those who want to understand their relationships with the same rigor they apply to other important areas of life.
+            For complicated romance, mixed signals, reconciliation questions, and
+            emotional pattern fog—LuvStories is a calm, premium surface for your
+            own narrative, metrics, and next moves.
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {featureCards.map((card) => (
             <div
               key={card.title}
-              className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6"
+              className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-7 transition hover:border-white/20"
             >
-              <div className="flex items-center gap-3">
-                <img 
-                  src={`/${card.icon}`}
-                  alt=""
-                  className="h-6 w-6 opacity-70"
-                />
-                <div className="text-xl font-semibold">{card.title}</div>
-              </div>
-              <p className="mt-3 text-sm leading-7 text-white/65">{card.body}</p>
+              <div
+                className={`pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br ${card.accent} opacity-60 blur-2xl transition group-hover:opacity-90`}
+              />
+              <div className="relative text-xl font-semibold">{card.title}</div>
+              <p className="relative mt-3 text-sm leading-7 text-white/65">
+                {card.body}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="privacy" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+      <section id="privacy" className="mx-auto max-w-7xl px-6 py-16 lg:py-24" data-reveal>
+        <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
             <div className="text-sm uppercase tracking-[0.2em] text-white/40">
-              Privacy & Security
+              Privacy
             </div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-              Your relationship data belongs only to you
+              Your relationship story stays yours
             </h2>
             <p className="mt-4 text-lg leading-8 text-white/65">
-              Every story is protected by multiple layers of security:
+              No public profiles. No exposed timelines. The product is built so
+              private narratives, notes, and reports are scoped to the signed-in
+              owner—with database policies designed for strict separation.
             </p>
-            <ul className="mt-4 space-y-3 text-white/65">
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Row-level security ensures only you can access your stories</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>AES-256 encryption for all sensitive notes and reports</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Zero-knowledge architecture - we never see your unencrypted data</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Open-source security model with regular third-party audits</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>GDPR & CCPA compliant data handling</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/30" />
-                <span>Optional local-only storage mode for maximum privacy</span>
-              </li>
-            </ul>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <PrivacyCard
-              title="Private by design"
-              body="Your stories are encrypted at rest and inaccessible to anyone else, including us."
+              title="Account-scoped stories"
+              body="Every query is tied to your user id. There are no public story URLs for private content."
             />
             <PrivacyCard
-              title="Zero-knowledge architecture"
-              body="We never see your unencrypted data. Your encryption keys stay with you."
+              title="Encryption-ready notes"
+              body="Sensitive text can be stored encrypted; keys and cleartext stay under your control."
             />
             <PrivacyCard
-              title="Audited security"
-              body="Our security model is regularly tested by independent third parties."
+              title="No surveillance positioning"
+              body="LuvStories is for personal clarity and reflection—not tracking another person without consent."
             />
             <PrivacyCard
-              title="Data ownership"
-              body="You own all your data. Export or delete it anytime with one click."
+              title="You own exports"
+              body="When export ships, your data should leave as easily as it entered—on your terms."
             />
           </div>
         </div>
       </section>
 
-      <section id="testimonials" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="mb-8 max-w-2xl">
-          <div className="text-sm uppercase tracking-[0.2em] text-white/40">
-            Trusted By
-          </div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-            Helping people see clearly
-          </h2>
-          <p className="mt-4 text-lg leading-8 text-white/65">
-            Used by individuals, couples, and professionals to gain clarity and make better relationship decisions.
-          </p>
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <p className="text-lg italic leading-8 text-white/65">
-              "The timeline visualization helped me see patterns I was too close to notice. It's been transformative."
-            </p>
-            <div className="mt-4 text-sm font-medium text-white/85">
-              — Sarah K., Therapist
-            </div>
-          </div>
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <p className="text-lg italic leading-8 text-white/65">
-              "Finally a tool that respects privacy while helping me make better relationship decisions."
-            </p>
-            <div className="mt-4 text-sm font-medium text-white/85">
-              — Michael T., Engineer
-            </div>
-          </div>
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-            <p className="text-lg italic leading-8 text-white/65">
-              "The relationship health metrics gave me concrete ways to track progress and identify areas to improve."
-            </p>
-            <div className="mt-4 text-sm font-medium text-white/85">
-              — Emily R., Writer
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="faq" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="mb-8 max-w-2xl">
-          <div className="text-sm uppercase tracking-[0.2em] text-white/40">
-            FAQ
-          </div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-            Common questions
-          </h2>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-lg font-semibold">Is my data really private?</div>
-            <p className="mt-2 text-sm leading-7 text-white/65">
-              Yes. We use Supabase's row-level security and AES-256 encryption. Your data is only accessible to you and never shared.
-            </p>
-          </div>
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-lg font-semibold">How does the scoring work?</div>
-            <p className="mt-2 text-sm leading-7 text-white/65">
-              Scores are calculated based on your input data and psychological research on relationship patterns. You control what factors are included.
-            </p>
-          </div>
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-lg font-semibold">Can I export my data?</div>
-            <p className="mt-2 text-sm leading-7 text-white/65">
-              Yes. You can export all your stories and data at any time in JSON format. Your encrypted notes remain protected.
-            </p>
-          </div>
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-lg font-semibold">What makes this different?</div>
-            <p className="mt-2 text-sm leading-7 text-white/65">
-              LuvStories combines private journaling with relationship pattern analysis and future path modeling - all in one secure workspace.
-            </p>
-          </div>
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-lg font-semibold">Is this therapy?</div>
-            <p className="mt-2 text-sm leading-7 text-white/65">
-              No. LuvStories is a private relationship intelligence tool, not a substitute for professional therapy or counseling.
-            </p>
-          </div>
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-6">
-            <div className="text-lg font-semibold">Can I try it free?</div>
-            <p className="mt-2 text-sm leading-7 text-white/65">
-              Yes. Start with a free account to explore the core features before upgrading for advanced analytics and reports.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="cta" className="mx-auto max-w-7xl px-6 pb-24">
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.03] p-8 md:p-10">
+      <section id="future" className="mx-auto max-w-7xl px-6 pb-24" data-reveal>
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-8 shadow-xl shadow-black/40 backdrop-blur-md md:p-12">
           <div className="max-w-3xl">
             <div className="text-sm uppercase tracking-[0.2em] text-white/40">
-              Expansion
+              Future
             </div>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] md:text-5xl">
-              Start with one story. Expand into many.
+              Deeper timelines. Richer reports. Still private.
             </h2>
             <p className="mt-4 text-base leading-8 text-white/65 md:text-lg">
-              LuvStories starts as a private workspace for one relationship,
-              then scales into a reusable story engine for future relationships,
-              reflection, decision support, and emotional pattern recognition.
+              The roadmap points toward richer event modeling, coaching around
+              difficult messages, scenario paths, and careful, opt-in assistance
+              —without turning your love life into public content.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               {[
-                "Private dashboards",
-                "Message coaching",
-                "Secure accounts",
-                "Story timelines",
-                "Future path modeling",
+                "Event graph & chapters",
+                "Private PDF exports",
+                "Scenario modeling",
+                "Pattern alerts you control",
+                "Optional AI reports (privacy-reviewed)",
               ].map((tag) => (
                 <div
                   key={tag}
@@ -479,20 +268,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </main>
+
+      <ProcessFlowSection />
+      <ProductHonestyNote status="demo" />
+    </div>
   );
 }
 
-
-function PrivacyCard({
-  title,
-  body,
-}: {
-  title: string;
-  body: string;
-}) {
+function PrivacyCard({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
+    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
       <div className="text-lg font-semibold">{title}</div>
       <p className="mt-2 text-sm leading-7 text-white/65">{body}</p>
     </div>
